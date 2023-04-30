@@ -33,7 +33,7 @@ namespace Pokedex
 
         private async void frmMain_Load(object sender, EventArgs e)
         {
-            Pokemon selectedPokemon = new Pokemon;
+            Pokemon selectedPokemon = new Pokemon();
             await selectedPokemon.LoadData(currentPokemonID);
             loadSelectedPokemon(selectedPokemon);
         }
@@ -68,6 +68,11 @@ namespace Pokedex
             public int Weight { get; set; }
             public List<PokemonType> Types { get; set; }
             public List<PokemonStat> Stats { get; set; }
+            public string GetSpriteURL()
+            {
+                string spriteURL = $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{ID}.png";
+                return spriteURL;
+            }
 
             public async Task LoadData(int pokemonID)
             {
@@ -78,10 +83,14 @@ namespace Pokedex
 
                     if (response.IsSuccessStatusCode)
                     {
+                        var options = new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        };
+
                         string json = await response.Content.ReadAsStringAsync();
 
-                        var pokemonData = JsonSerializer.Deserialize<PokemonData>(json);
-
+                        PokemonData pokemonData = JsonSerializer.Deserialize<PokemonData>(json, options);
                         Name = pokemonData.Name;
                         ID = pokemonData.ID;
                         Height = pokemonData.Height;
@@ -130,7 +139,8 @@ namespace Pokedex
             {
                 currentPokemonID++;
             }
-            Pokemon selectedPokemon = await GetPokemonDataAsync(currentPokemonID);
+            Pokemon selectedPokemon = new Pokemon();
+            await selectedPokemon.LoadData(currentPokemonID);
             loadSelectedPokemon(selectedPokemon);
         }
 
@@ -144,7 +154,8 @@ namespace Pokedex
             {  
                 currentPokemonID--;
             }
-            Pokemon selectedPokemon = await GetPokemonDataAsync(currentPokemonID);
+            Pokemon selectedPokemon = new Pokemon();
+            await selectedPokemon.LoadData(currentPokemonID);
             loadSelectedPokemon(selectedPokemon);
         }
 
