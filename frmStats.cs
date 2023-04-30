@@ -15,28 +15,34 @@ namespace Pokedex
 {
     public partial class frmStats : Form
     {
-        public static frmStats instance;
-        //var test = frmMain.instance.currentPokemonID;
+        public PokemonData CurrentPokemon { get; set; }
 
-        public frmStats()
+        public frmStats(PokemonData pokemonData)
         {
             InitializeComponent();
-            instance = this;
+            this.CurrentPokemon = pokemonData;
         }
 
         private void frmStats_Load(object sender, EventArgs e)
         {
-            
+
             //string curDir = Directory.GetCurrentDirectory();
             //webBrowserStats.Navigate(new Uri(String.Format('file:///{0}/stats.html', curDir)));
+            string htmlTest = CurrentPokemon.Name;
+            //double maxStatValue = Math.Max(CurrentPokemon.stats[0], Math.Max(CurrentPokemon.stats[1], Math.Max(CurrentPokemon.stats[2], Math.Max(CurrentPokemon.stats[3], Math.Max(CurrentPokemon.stats[4], CurrentPokemon.stats[5])))));
+            double hpAsPercent = (double)CurrentPokemon.stats[0].BaseStat / 255 * 100;
+            double atkAsPercent = (double)CurrentPokemon.stats[1].BaseStat / 255 * 100;
+            double defAsPercent = (double)CurrentPokemon.stats[2].BaseStat / 255 * 100;
+            double spAtkAsPercent = (double)CurrentPokemon.stats[3].BaseStat / 255 * 100;
+            double spDefAsPercent = (double)CurrentPokemon.stats[4].BaseStat / 255 * 100;
+            double spdAsPercent = (double)CurrentPokemon.stats[5].BaseStat / 255 * 100;
 
             //Define HTML document
-            string html = 
+            string html =
             @"<!DOCTYPE html>
             <html>
             <head>
                 <style>
-                    @Model Pokemon;
                     .bar {
                         width: 200px;
                         height: 20px;
@@ -55,11 +61,11 @@ namespace Pokedex
                     }
 
                     .hp {
-                        background-color: #FF0000;
+                        background-color: #fe0000;
                     }
 
                     .attack {
-                        background-color: #FFA500;
+                        background-color: #ef7e30;
                     }
 
                     .defense {
@@ -88,37 +94,38 @@ namespace Pokedex
             </head>
 
             <body>
-                <h1>Pokemon Stats Chart</h1>
+                <h1>" + CurrentPokemon.Name + @" Stats Chart</h1>
                 <div class='hp label'>HP</div>
                 <div class='bar'>
-                    <div class='bar-fill hp' style='width: @Model.HpPercent%;'></div>
+                    <div class='bar-fill hp' style='width: " + hpAsPercent + @"%;'></div>
                 </div>
                 <div class='attack label'>Attack</div>
                 <div class='bar'>
-                    <div class='bar-fill attack' style='width: @Model.AttackPercent%;'></div>
+                    <div class='bar-fill attack' style='width: " + atkAsPercent + @"%;'></div>
                 </div>
                 <div class='defense label'>Defense</div>
                 <div class='bar'>
-                    <div class='bar-fill defense' style='width: @Model.DefensePercent%;'></div>
+                    <div class='bar-fill defense' style='width: " + defAsPercent + @"%;'></div>
                 </div>
                 <div class='sp_atk label'>Special Attack</div>
                 <div class='bar'>
-                    <div class='bar-fill sp_atk' style='width: @Model.SpAtkPercent%;'></div>
+                    <div class='bar-fill sp_atk' style='width: " + spAtkAsPercent + @"%;'></div>
                 </div>
                 <div class='sp_def label'>Special Defense</div>
                 <div class='bar'>
-                    <div class='bar-fill sp_def' style='width: @Model.SpDefPercent%;'></div>
+                    <div class='bar-fill sp_def' style='width: " + spDefAsPercent + @"%;'></div>
                 </div>
                 <div class='speed label'>Speed</div>
                 <div class='bar'>
-                    <div class='bar-fill speed' style='width: @Model.SpeedPercent%;'></div>
+                    <div class='bar-fill speed' style='width: " + spdAsPercent + @"%;'></div>
                 </div>
             </body>
             </html>";
-            
+
 
             // Render HTML
             webBrowserStats.Document.Write(html);
+            //webBrowserStats.Document.Write(htmlTest);
 
         }
 

@@ -22,50 +22,34 @@ namespace Pokedex
     public partial class frmMain : Form
     {
         public static frmMain instance;
-        public int currentPokemonID;
-
+        public int currentPokemonID = 1;
+        public PokemonData currentPokemon;
         public frmMain()
         {
             InitializeComponent();
-            instance = this;
-            currentPokemonID = 1;
+            this.currentPokemon = Pokemon.LoadPokemon(this.currentPokemonID);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //Pokemon selectedPokemon = new Pokemon();
-            //await selectedPokemon.LoadData(currentPokemonID);
             LoadSelectedPokemon(currentPokemonID);
-            //PokemonStats pokemonStats = new PokemonStats()
-            //{
-            //    HP = selectedPokemon.Stats[0].BaseStat,
-            //    Attack = selectedPokemon.Stats[1].BaseStat,
-            //    Defense = selectedPokemon.Stats[2].BaseStat,
-            //    SpecialAttack = selectedPokemon.Stats[3].BaseStat,
-            //    SpecialDefense = selectedPokemon.Stats[4].BaseStat,
-            //    Speed = selectedPokemon.Stats[5].BaseStat,
-            //};
         }
 
         async void LoadSelectedPokemon(int pokemonID)
         {
             Pokemon selectedPokemon = new Pokemon();
             await selectedPokemon.LoadData(pokemonID);
-            lblNumber.Text = selectedPokemon.ID.ToString();
-            lblName.Text = ParsePokemonName(selectedPokemon.Name);
-            spriteBoxMain.ImageLocation = selectedPokemon.GetSpriteURL();
-            lblType1.Text = (selectedPokemon.Height * 10).ToString() + " cm";
-            lblType2.Text = (selectedPokemon.Weight * .1).ToString() + " kg";
+            DisplayStats(selectedPokemon);
         }
 
-        //void LoadSelectedPokemon(Pokemon pokemon)
-        //{
-        //    lblNumber.Text = pokemon.ID.ToString();
-        //    lblName.Text = ParsePokemonName(pokemon.Name);
-        //    spriteBoxMain.ImageLocation = pokemon.GetSpriteURL();
-        //    lblType1.Text = (pokemon.Height * 10).ToString() + " cm";
-        //    lblType2.Text = (pokemon.Weight * .1).ToString() + " kg";
-        //}
+        public void DisplayStats(Pokemon pokemon)
+        {
+            lblNumber.Text = currentPokemon.ID.ToString();
+            lblName.Text = ParsePokemonName(currentPokemon.Name);
+            spriteBoxMain.ImageLocation = $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{currentPokemon.ID}.png";
+            lblType1.Text = (currentPokemon.Height * 10).ToString() + " cm";
+            lblType2.Text = (currentPokemon.Weight * .1).ToString() + " kg";
+        }
 
         public static string ParsePokemonName(string name)
                 {
@@ -103,7 +87,7 @@ namespace Pokedex
 
         private void btnStats_Click(object sender, EventArgs e)
         {
-            Form frmStats = new frmStats();
+            Form frmStats = new frmStats(this.currentPokemon);
             frmStats.ShowDialog();
         }
         private void btnCaught_Click(object sender, EventArgs e)

@@ -9,22 +9,48 @@ using System.Threading.Tasks;
 
 namespace Pokedex
 {
-    internal class Pokemon
+    public class Pokemon
     {
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public int Height { get; set; }
-        public int Weight { get; set; }
-        public List<TypeItem> Types { get; set; }
-        public List<StatsItem> Stats { get; set; }
+        //public string Name { get; set; }
+        //public int ID { get; set; }
+        //public int Height { get; set; }
+        //public int Weight { get; set; }
+        //public List<TypeItem> Types { get; set; }
+        //public List<StatsItem> Stats { get; set; }
 
-        public string GetSpriteURL()
+        //public string GetSpriteURL()
+        //{
+        //    string spriteURL = $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{ID}.png";
+        //    return spriteURL;
+        //}
+
+        public static PokemonData LoadPokemon(int pokemonID)
         {
-            string spriteURL = $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{ID}.png";
-            return spriteURL;
+            using (HttpClient httpClient = new HttpClient())
+            {
+                string url = $"https://pokeapi.co/api/v2/pokemon/{pokemonID}/";
+                HttpResponseMessage response =  httpClient.GetAsync(url).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    PokemonData pokemonData = JsonSerializer.Deserialize<PokemonData>(json, options);
+                    return pokemonData;
+                }
+                else
+                {
+                    throw new HttpRequestException($"HTTP error: {response.StatusCode}");
+                }
+            }
         }
 
-        public async Task LoadData(int pokemonID)
+        public async Task<PokemonData> LoadData(int pokemonID)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -41,12 +67,14 @@ namespace Pokedex
                     string json = await response.Content.ReadAsStringAsync();
 
                     PokemonData pokemonData = JsonSerializer.Deserialize<PokemonData>(json, options);
-                    Name = pokemonData.Name;
-                    ID = pokemonData.ID;
-                    Height = pokemonData.Height;
-                    Weight = pokemonData.Weight;
-                    Types = pokemonData.types;
-                    Stats = pokemonData.stats;
+                    //this.Name = pokemonData.Name;
+                    //ID = pokemonData.ID;
+                    //Height = pokemonData.Height;
+                    //Weight = pokemonData.Weight;
+                    //Types = pokemonData.types;
+                    //Stats = pokemonData.stats;
+
+                    return pokemonData;
                 }
                 else
                 {
