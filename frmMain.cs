@@ -14,18 +14,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.AxHost;
+using static Pokedex.frmMain;
+using static Pokedex.frmStats;
+using static Pokedex.PokemonStats;
+using static Pokedex.Pokemon;
+
+
 
 namespace Pokedex
 {
     public partial class frmMain : Form
     {
         public int currentPokemonID = 1;
-
         public frmMain()
         {
             InitializeComponent();
         }
-
         private void btnCaught_Click(object sender, EventArgs e)
         {
             frmCaught frmCaught = new frmCaught();
@@ -36,9 +40,18 @@ namespace Pokedex
         {
             Pokemon selectedPokemon = new Pokemon();
             await selectedPokemon.LoadData(currentPokemonID);
-            loadSelectedPokemon(selectedPokemon);
+            LoadSelectedPokemon(selectedPokemon);
+            //PokemonStats pokemonStats = new PokemonStats()
+            //{
+            //    HP = selectedPokemon.Stats[0].BaseStat,
+            //    Attack = selectedPokemon.Stats[1].BaseStat,
+            //    Defense = selectedPokemon.Stats[2].BaseStat,
+            //    SpecialAttack = selectedPokemon.Stats[3].BaseStat,
+            //    SpecialDefense = selectedPokemon.Stats[4].BaseStat,
+            //    Speed = selectedPokemon.Stats[5].BaseStat,
+            //};
         }
-        public void loadSelectedPokemon(Pokemon pokemon)
+        void LoadSelectedPokemon(Pokemon pokemon)
         {
             lblNumber.Text = pokemon.ID.ToString();
             lblName.Text = ParsePokemonName(pokemon.Name);
@@ -56,94 +69,12 @@ namespace Pokedex
                 }
 
 
-        public class Pokemon
-        {
-            public string Name { get; set; }
-            public int ID { get; set; }
-            public int Height { get; set; }
-            public int Weight { get; set; }
-            public List<TypeItem> Types { get; set; }
-            public List<StatsItem> Stats { get; set; }
-            public string GetSpriteURL()
-            {
-                string spriteURL = $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{ID}.png";
-                return spriteURL;
-            }
 
-            public async Task LoadData(int pokemonID)
-            {
-                using (HttpClient httpClient = new HttpClient())
-                {
-                    string url = $"https://pokeapi.co/api/v2/pokemon/{pokemonID}/";
-                    HttpResponseMessage response = await httpClient.GetAsync(url);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var options = new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        };
-
-                        string json = await response.Content.ReadAsStringAsync();
-
-                        PokemonData pokemonData = JsonSerializer.Deserialize<PokemonData>(json, options);
-                        Name = pokemonData.Name;
-                        ID = pokemonData.ID;
-                        Height = pokemonData.Height;
-                        Weight = pokemonData.Weight;
-                        Types = pokemonData.types;
-                        Stats = pokemonData.stats;
-
-                        // Format for returning type name eg "grass" and stat BaseStat eg "45"
-                        // stats[0] = "hp". stats[1] = "attack", 2 = Def, 3 = Sp.Atk, 4 = Sp.Def, 5 = Speed
-                        var typesTest = pokemonData.types[0].type.name.ToString();
-                        var statsTest = pokemonData.stats[0].BaseStat.ToString() + " hp";
-
-                    }
-                    else
-                    {
-                        throw new HttpRequestException($"HTTP error: {response.StatusCode}");
-                    }
-                }
-            }
-
-        }
-
-        public class PokemonData
-        {
-            public string Name { get; set; }
-            public int ID { get; set; }
-            public int Height { get; set; }
-            public int Weight { get; set; }
-            public List<TypeItem> types { get; set; }
-            public List<StatsItem> stats { get; set; }
-        }
-
-        public class TypeItem
-        {
-            public Type type { get; set; }
-        }
-
-        public class Type
-        {
-            public string name { get; set; }
-        }
-
-        public class Stat
-        {
-            public string name { get; set; }
-        }
-        public class StatsItem
-        {
-            [JsonPropertyName("base_stat")]
-            public int BaseStat { get; set; }
-            public Stat stat { get; set; }
-        }
-
+       
 
         private async void btnIncrement_Click(object sender, EventArgs e)
         {
-            if (currentPokemonID == 10271)
+            if (currentPokemonID == 10263)
             {
                 currentPokemonID = 1;
             }
@@ -153,7 +84,7 @@ namespace Pokedex
             }
             Pokemon selectedPokemon = new Pokemon();
             await selectedPokemon.LoadData(currentPokemonID);
-            loadSelectedPokemon(selectedPokemon);
+            LoadSelectedPokemon(selectedPokemon);
         }
 
         private async void btnDecrement_Click(object sender, EventArgs e)
@@ -168,12 +99,12 @@ namespace Pokedex
             }
             Pokemon selectedPokemon = new Pokemon();
             await selectedPokemon.LoadData(currentPokemonID);
-            loadSelectedPokemon(selectedPokemon);
+            LoadSelectedPokemon(selectedPokemon);
         }
 
         private void btnStats_Click(object sender, EventArgs e)
         {
-            Form frmStats = new Form();
+            Form frmStats = new frmStats();
             frmStats.ShowDialog();
         }
     }
@@ -191,3 +122,7 @@ namespace Pokedex
 //    I need to deserialize stats and GUI them up into a bar graph or w/e
 //    And I also need to implement an HTML thing, maybe a bar graph? or a cry played in a webframe?
 
+// Format for returning type name eg "grass" and stat BaseStat eg "45"
+// stats[0] = "hp". stats[1] = "attack", 2 = Def, 3 = Sp.Atk, 4 = Sp.Def, 5 = Speed
+//var typesTest = pokemonData.types[0].type.name.ToString();
+//var statsTest = pokemonData.stats[0].BaseStat.ToString() + " hp";

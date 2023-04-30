@@ -1,0 +1,177 @@
+﻿<!--<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .chart-wrap {
+            width: 650px;
+            height: 600px;
+            font-family: sans-serif;
+        }
+
+            .chart-wrap .title {
+                text-align: center;
+            }
+
+        .grid {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border-bottom: 2px solid #aaa;
+            background: repeating-linear-gradient(0deg,transparent,transparent 19.5%,rgba(170,170,170,0.7) 20%);
+        }
+
+            .grid .bar {
+                background-color: #F16335;
+                width: 45px;
+                height: var(--bar-value);
+                align-self: flex-end;
+                margin: 0 auto;
+                border-radius: 3px 3px 0 0;
+                position: relative;
+            }
+
+                .grid .bar.bar:hover {
+                    opacity: 0.7;
+                }
+
+                .grid .bar::after {
+                    content: attr(data-name);
+                    top: -3em;
+                    padding: 10px;
+                    display: inline-block;
+                    white-space: nowrap;
+                    position: absolute;
+                    transform: rotate(-45deg);
+                }
+
+            .grid.horizontal {
+                flex-direction: column;
+                border-bottom: none;
+                border-left: 2px solid #aaa;
+                background: repeating-linear-gradient(90deg,transparent,transparent 19.5%,rgba(170,170,170,0.7) 20%);
+            }
+
+                .grid.horizontal .bar {
+                    height: 45px;
+                    width: var(--bar-value);
+                    align-self: flex-start;
+                    margin: auto 0 auto 0;
+                    border-radius: 0 3px 3px 0;
+                }
+
+                    .grid.horizontal .bar::after {
+                        top: initial;
+                        left: 100%;
+                        padding: 0 10px;
+                        display: inline-block;
+                        white-space: nowrap;
+                        position: absolute;
+                        transform: rotate(0deg);
+                        line-height: 45px;
+                    }
+
+    </style>
+</head>
+<body>
+    <div class="chart-wrap">
+        <h2 class="title">Stats</h2>
+        <div class="grid horizontal">
+            <div class="bar" style="--bar-value:85%;" data-name="HP" title="HP 85%"></div>
+            <div class="bar" style="--bar-value:23%;" data-name="Attack" title="Attack 23%"></div>
+            <div class="bar" style="--bar-value:7%;" data-name="Defense" title="Defense 7%"></div>
+            <div class="bar" style="--bar-value:38%;" data-name="Sp. Attack" title="Sp. Attack 38%"></div>
+            <div class="bar" style="--bar-value:35%;" data-name="Sp. Defense" title="Sp. Defense 35%"></div>
+            <div class="bar" style="--bar-value:30%;" data-name="Speed" title="Speed 30%"></div>
+        </div>
+    </div>
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pokemon Stats Chart</title>
+    <style>
+        @Model Pokemon;
+        .bar {
+            width: 200px;
+            height: 20px;
+            background-color: #ddd;
+            margin-bottom: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #4CAF50;
+        }
+
+        .hp {
+            background-color: #FF0000;
+        }
+
+        .attack {
+            background-color: #FFA500;
+        }
+
+        .defense {
+            background-color: #808080;
+        }
+
+        .sp_atk {
+            background-color: #FF00FF;
+        }
+
+        .sp_def {
+            background-color: #00FFFF;
+        }
+
+        .speed {
+            background-color: #00FF00;
+        }
+
+        .label {
+            display: inline-block;
+            margin-bottom: 5px;
+            width: 100px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pokemon Stats Chart</h1>
+    <div class="hp label">HP</div>
+    <div class="bar">
+        <div class="bar-fill hp" style="width: @Model.HpPercent%;"></div>
+    </div>
+    <div class="attack label">Attack</div>
+    <div class="bar">
+        <div class="bar-fill attack" style="width: @Model.AttackPercent%;"></div>
+    </div>
+    <div class="defense label">Defense</div>
+    <div class="bar">
+        <div class="bar-fill defense" style="width: @Model.DefensePercent%;"></div>
+    </div>
+    <div class="sp_atk label">Special Attack</div>
+    <div class="bar">
+        <div class="bar-fill sp_atk" style="width: @Model.SpAtkPercent%;"></div>
+    </div>
+    <div class="sp_def label">Special Defense</div>
+    <div class="bar">
+        <div class="bar-fill sp_def" style="width: @Model.SpDefPercent%;"></div>
+    </div>
+    <div class="speed label">Speed</div>
+    <div class="bar">
+        <div class="bar-fill speed" style="width: @Model.SpeedPercent%;"></div>
+    </div>
+</body>
+</html>

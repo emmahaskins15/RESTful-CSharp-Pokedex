@@ -37,17 +37,19 @@
             this.webBrowserStats.Location = new System.Drawing.Point(0, 0);
             this.webBrowserStats.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowserStats.Name = "webBrowserStats";
-            this.webBrowserStats.Size = new System.Drawing.Size(505, 382);
+            this.webBrowserStats.Size = new System.Drawing.Size(1167, 773);
             this.webBrowserStats.TabIndex = 0;
+            this.webBrowserStats.Url = new System.Uri("", System.UriKind.Relative);
             // 
             // frmStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(505, 382);
+            this.ClientSize = new System.Drawing.Size(1167, 773);
             this.Controls.Add(this.webBrowserStats);
             this.Name = "frmStats";
             this.Text = "Stats";
+            this.Load += new System.EventHandler(this.frmStats_Load);
             this.ResumeLayout(false);
 
         }
