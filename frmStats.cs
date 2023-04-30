@@ -15,10 +15,13 @@ namespace Pokedex
 {
     public partial class frmStats : Form
     {
-        
+        public static frmStats instance;
+        //var test = frmMain.instance.currentPokemonID;
+
         public frmStats()
         {
             InitializeComponent();
+            instance = this;
         }
 
         private void frmStats_Load(object sender, EventArgs e)

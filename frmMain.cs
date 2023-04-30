@@ -14,10 +14,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.AxHost;
-using static Pokedex.frmMain;
-using static Pokedex.frmStats;
-using static Pokedex.PokemonStats;
-using static Pokedex.Pokemon;
 
 
 
@@ -25,22 +21,21 @@ namespace Pokedex
 {
     public partial class frmMain : Form
     {
-        public int currentPokemonID = 1;
+        public static frmMain instance;
+        public int currentPokemonID;
+
         public frmMain()
         {
             InitializeComponent();
-        }
-        private void btnCaught_Click(object sender, EventArgs e)
-        {
-            frmCaught frmCaught = new frmCaught();
-            frmCaught.Show();
+            instance = this;
+            currentPokemonID = 1;
         }
 
-        private async void frmMain_Load(object sender, EventArgs e)
+        private void frmMain_Load(object sender, EventArgs e)
         {
-            Pokemon selectedPokemon = new Pokemon();
-            await selectedPokemon.LoadData(currentPokemonID);
-            LoadSelectedPokemon(selectedPokemon);
+            //Pokemon selectedPokemon = new Pokemon();
+            //await selectedPokemon.LoadData(currentPokemonID);
+            LoadSelectedPokemon(currentPokemonID);
             //PokemonStats pokemonStats = new PokemonStats()
             //{
             //    HP = selectedPokemon.Stats[0].BaseStat,
@@ -51,14 +46,26 @@ namespace Pokedex
             //    Speed = selectedPokemon.Stats[5].BaseStat,
             //};
         }
-        void LoadSelectedPokemon(Pokemon pokemon)
+
+        async void LoadSelectedPokemon(int pokemonID)
         {
-            lblNumber.Text = pokemon.ID.ToString();
-            lblName.Text = ParsePokemonName(pokemon.Name);
-            spriteBoxMain.ImageLocation = pokemon.GetSpriteURL();
-            lblType1.Text = (pokemon.Height * 10).ToString() + " cm";
-            lblType2.Text = (pokemon.Weight * .1).ToString() + " kg";
+            Pokemon selectedPokemon = new Pokemon();
+            await selectedPokemon.LoadData(pokemonID);
+            lblNumber.Text = selectedPokemon.ID.ToString();
+            lblName.Text = ParsePokemonName(selectedPokemon.Name);
+            spriteBoxMain.ImageLocation = selectedPokemon.GetSpriteURL();
+            lblType1.Text = (selectedPokemon.Height * 10).ToString() + " cm";
+            lblType2.Text = (selectedPokemon.Weight * .1).ToString() + " kg";
         }
+
+        //void LoadSelectedPokemon(Pokemon pokemon)
+        //{
+        //    lblNumber.Text = pokemon.ID.ToString();
+        //    lblName.Text = ParsePokemonName(pokemon.Name);
+        //    spriteBoxMain.ImageLocation = pokemon.GetSpriteURL();
+        //    lblType1.Text = (pokemon.Height * 10).ToString() + " cm";
+        //    lblType2.Text = (pokemon.Weight * .1).ToString() + " kg";
+        //}
 
         public static string ParsePokemonName(string name)
                 {
@@ -68,11 +75,7 @@ namespace Pokedex
                     return parsedName;
                 }
 
-
-
-       
-
-        private async void btnIncrement_Click(object sender, EventArgs e)
+        private void btnIncrement_Click(object sender, EventArgs e)
         {
             if (currentPokemonID == 10263)
             {
@@ -82,12 +85,10 @@ namespace Pokedex
             {
                 currentPokemonID++;
             }
-            Pokemon selectedPokemon = new Pokemon();
-            await selectedPokemon.LoadData(currentPokemonID);
-            LoadSelectedPokemon(selectedPokemon);
+            LoadSelectedPokemon(currentPokemonID);
         }
 
-        private async void btnDecrement_Click(object sender, EventArgs e)
+        private void btnDecrement_Click(object sender, EventArgs e)
         {
             if (currentPokemonID == 1)
             {
@@ -97,15 +98,18 @@ namespace Pokedex
             {  
                 currentPokemonID--;
             }
-            Pokemon selectedPokemon = new Pokemon();
-            await selectedPokemon.LoadData(currentPokemonID);
-            LoadSelectedPokemon(selectedPokemon);
+            LoadSelectedPokemon(currentPokemonID);
         }
 
         private void btnStats_Click(object sender, EventArgs e)
         {
             Form frmStats = new frmStats();
             frmStats.ShowDialog();
+        }
+        private void btnCaught_Click(object sender, EventArgs e)
+        {
+            frmCaught frmCaught = new frmCaught();
+            frmCaught.Show();
         }
     }
 }

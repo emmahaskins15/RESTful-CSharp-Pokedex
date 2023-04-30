@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pokemon.cs" />
-    <Compile Include="PokemonStats.cs" />
     <Compile Include="frmCaught.cs">
       <SubType>Form</SubType>
     </Compile>
