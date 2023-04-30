@@ -38,16 +38,17 @@
             this.spriteBoxMain = new System.Windows.Forms.PictureBox();
             this.btnStats = new System.Windows.Forms.Button();
             this.btnCaught = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.btnIncrement = new System.Windows.Forms.Button();
             this.btnDecrement = new System.Windows.Forms.Button();
             this.caughtCheckbox = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spriteBoxMain)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.lblName);
             this.groupBox1.Controls.Add(this.lblNumber);
             this.groupBox1.Controls.Add(this.label3);
@@ -66,18 +67,16 @@
             this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(6, 42);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(66, 20);
+            this.lblName.Size = new System.Drawing.Size(0, 20);
             this.lblName.TabIndex = 9;
-            this.lblName.Text = "lblName";
             // 
             // lblNumber
             // 
             this.lblNumber.AutoSize = true;
             this.lblNumber.Location = new System.Drawing.Point(45, 22);
             this.lblNumber.Name = "lblNumber";
-            this.lblNumber.Size = new System.Drawing.Size(80, 20);
+            this.lblNumber.Size = new System.Drawing.Size(0, 20);
             this.lblNumber.TabIndex = 8;
-            this.lblNumber.Text = "lblNumber";
             // 
             // label3
             // 
@@ -91,35 +90,34 @@
             // lblType2
             // 
             this.lblType2.AutoSize = true;
-            this.lblType2.Location = new System.Drawing.Point(258, 68);
+            this.lblType2.Location = new System.Drawing.Point(258, 107);
             this.lblType2.Name = "lblType2";
-            this.lblType2.Size = new System.Drawing.Size(48, 20);
+            this.lblType2.Size = new System.Drawing.Size(0, 20);
             this.lblType2.TabIndex = 4;
-            this.lblType2.Text = "type2";
             // 
             // lblType1
             // 
             this.lblType1.AutoSize = true;
-            this.lblType1.Location = new System.Drawing.Point(258, 48);
+            this.lblType1.Location = new System.Drawing.Point(258, 42);
             this.lblType1.Name = "lblType1";
-            this.lblType1.Size = new System.Drawing.Size(48, 20);
+            this.lblType1.Size = new System.Drawing.Size(0, 20);
             this.lblType1.TabIndex = 3;
-            this.lblType1.Text = "type1";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(254, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 20);
+            this.label1.Size = new System.Drawing.Size(60, 20);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Types:";
+            this.label1.Text = "Height:";
             // 
             // spriteBoxMain
             // 
             this.spriteBoxMain.Location = new System.Drawing.Point(10, 65);
             this.spriteBoxMain.Name = "spriteBoxMain";
             this.spriteBoxMain.Size = new System.Drawing.Size(201, 175);
+            this.spriteBoxMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.spriteBoxMain.TabIndex = 0;
             this.spriteBoxMain.TabStop = false;
             // 
@@ -131,6 +129,7 @@
             this.btnStats.TabIndex = 1;
             this.btnStats.Text = "Stats";
             this.btnStats.UseVisualStyleBackColor = true;
+            this.btnStats.Click += new System.EventHandler(this.btnStats_Click);
             // 
             // btnCaught
             // 
@@ -141,15 +140,6 @@
             this.btnCaught.Text = "Caught Pokemon";
             this.btnCaught.UseVisualStyleBackColor = true;
             this.btnCaught.Click += new System.EventHandler(this.btnCaught_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(387, 201);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(90, 58);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Favorite Pokemon";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // btnIncrement
             // 
@@ -184,6 +174,15 @@
             this.caughtCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.caughtCheckbox.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(254, 87);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 20);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Weight:";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -192,7 +191,6 @@
             this.Controls.Add(this.caughtCheckbox);
             this.Controls.Add(this.btnDecrement);
             this.Controls.Add(this.btnIncrement);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.btnCaught);
             this.Controls.Add(this.btnStats);
             this.Controls.Add(this.groupBox1);
@@ -217,12 +215,12 @@
         private System.Windows.Forms.PictureBox spriteBoxMain;
         private System.Windows.Forms.Button btnStats;
         private System.Windows.Forms.Button btnCaught;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnIncrement;
         private System.Windows.Forms.Button btnDecrement;
         private System.Windows.Forms.CheckBox caughtCheckbox;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblNumber;
+        private System.Windows.Forms.Label label2;
     }
 }
 

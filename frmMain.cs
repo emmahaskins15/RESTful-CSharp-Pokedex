@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -32,91 +33,92 @@ namespace Pokedex
 
         private async void frmMain_Load(object sender, EventArgs e)
         {
-            //readCSVFile();
-            //List<string[]> pokemonList = readCSVFile();
-            Pokemon selectedPokemon = await GetPokemonDataAsync(currentPokemonID);
+            Pokemon selectedPokemon = new Pokemon;
+            await selectedPokemon.LoadData(currentPokemonID);
             loadSelectedPokemon(selectedPokemon);
         }
         public void loadSelectedPokemon(Pokemon pokemon)
         {
             lblNumber.Text = pokemon.ID.ToString();
-            lblName.Text = pokemon.Name;
-        }
-        static async Task<Pokemon> GetPokemonDataAsync(int pokemonID)
-        {
-            using (var httpClient = new HttpClient())
+            lblName.Text = ParsePokemonName(pokemon.Name);
+            spriteBoxMain.ImageLocation = pokemon.GetSpriteURL();
+            lblType1.Text = pokemon.Height.ToString() + " cm";
+            lblType2.Text = pokemon.Weight.ToString() + " kg";
+            foreach (var stat in pokemon.Stats)
             {
-                httpClient.BaseAddress = new Uri("https://pokeapi.co/api/v2/pokemon/");
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await httpClient.GetAsync($"{pokemonID}");
-
-                Console.WriteLine("GetAsyncPokeAPI: " + response.EnsureSuccessStatusCode().ToString());
-
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(responseBody);
-
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
-
-
-                    Pokemon pokemon = JsonSerializer.Deserialize<Pokemon>(responseBody, options);
-                    return pokemon;
-                }
-                else
-                {
-                    Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
-                    return null;
-                }
-
-
+                Console.WriteLine($"{stat.Name}: {stat.BaseStat}");
             }
+            //lblType1.Text = pokemon.Types[0];
         }
+
+        public static string ParsePokemonName(string name)
+                {
+                    string parsedName = name.Replace("-", " ");
+                    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                    parsedName = textInfo.ToTitleCase(parsedName);
+                    return parsedName;
+                }
+
+
         public class Pokemon
         {
-            [JsonPropertyName("id")]
-            public int ID { get; set; }
-
-            [JsonPropertyName("name")]
             public string Name { get; set; }
+            public int ID { get; set; }
+            public int Height { get; set; }
+            public int Weight { get; set; }
+            public List<PokemonType> Types { get; set; }
+            public List<PokemonStat> Stats { get; set; }
 
-            [JsonPropertyName("types")]
-            public
+            public async Task LoadData(int pokemonID)
+            {
+                using (HttpClient httpClient = new HttpClient())
+                {
+                    string url = $"https://pokeapi.co/api/v2/pokemon/{pokemonID}/";
+                    HttpResponseMessage response = await httpClient.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
+
+                        var pokemonData = JsonSerializer.Deserialize<PokemonData>(json);
+
+                        Name = pokemonData.Name;
+                        ID = pokemonData.ID;
+                        Height = pokemonData.Height;
+                        Weight = pokemonData.Weight;
+                        Types = pokemonData.Types;
+                        Stats = pokemonData.Stats;
+                    }
+                    else
+                    {
+                        throw new HttpRequestException($"HTTP error: {response.StatusCode}");
+                    }
+                }
+            }
+
         }
 
-        //private List<string[]> readCSVFile()
-        //{
-        //    List<string[]> pokemonList = new List<string[]>();
+        public class PokemonData
+        {
+            public string Name { get; set; }
+            public int ID { get; set; }
+            public int Height { get; set; }
+            public int Weight { get; set; }
+            public List<PokemonType> Types { get; set; }
+            public List<PokemonStat> Stats { get; set; }
+        }
 
-        //    try
-        //    {
-        //        var reader = new StreamReader("Pokemon.csv");
+        public class PokemonType
+        {
+            public string Name { get; set; }
+        }
 
-        //        while (!reader.EndOfStream)
-        //        {
-        //            string line = reader.ReadLine();
-        //            string[] values = line.Split(',');
-        //            pokemonList.Add(values);
-        //        }
-        //        reader.Close();
+        public class PokemonStat
+        {
+            public string Name { get; set; }
+            public int BaseStat { get; set; }
+        }
 
-        //        // Console.WriteLine(pokemonList[1][1].ToString());
-        //        // > 'Bulbsaur'
-
-        //    }
-        //    catch (FileNotFoundException e)
-        //    {
-        //        MessageBox.Show(e.Message, "Error: pokemon.csv not found.");
-        //        Close();
-        //    }
-        //    return pokemonList;
-        //}
 
         private async void btnIncrement_Click(object sender, EventArgs e)
         {
@@ -144,6 +146,12 @@ namespace Pokedex
             }
             Pokemon selectedPokemon = await GetPokemonDataAsync(currentPokemonID);
             loadSelectedPokemon(selectedPokemon);
+        }
+
+        private void btnStats_Click(object sender, EventArgs e)
+        {
+            Form frmStats = new Form();
+            frmStats.ShowDialog();
         }
     }
 }
