@@ -17,10 +17,11 @@ namespace Pokedex
     {
         public PokemonData CurrentPokemon { get; set; }
 
-        public frmStats(PokemonData pokemonData)
+        public frmStats(PokemonData pokemonData, string parsedPokemonName)
         {
             InitializeComponent();
             this.CurrentPokemon = pokemonData;
+            this.CurrentPokemon.Name = parsedPokemonName;
         }
 
         private void frmStats_Load(object sender, EventArgs e)
@@ -43,6 +44,9 @@ namespace Pokedex
             <html>
             <head>
                 <style>
+                    * {
+                        font-family: Arial, Helvetica, sans-serif
+                    }
                     .bar {
                         width: 200px;
                         height: 20px;
@@ -50,6 +54,7 @@ namespace Pokedex
                         margin-bottom: 5px;
                         position: relative;
                         overflow: hidden;
+                        radius: 3px;
                     }
 
                     .bar-fill {
@@ -69,19 +74,19 @@ namespace Pokedex
                     }
 
                     .defense {
-                        background-color: #808080;
+                        background-color: #f8d030;
                     }
 
                     .sp_atk {
-                        background-color: #FF00FF;
+                        background-color: #6890f2;
                     }
 
                     .sp_def {
-                        background-color: #00FFFF;
+                        background-color: #78c750;
                     }
 
                     .speed {
-                        background-color: #00FF00;
+                        background-color: #f85687;
                     }
 
                     .label {
@@ -89,6 +94,7 @@ namespace Pokedex
                         margin-bottom: 5px;
                         width: 100px;
                         font-weight: bold;
+                        font-family: Arial, Helvetica, sans-serif;
                     }
                 </style>
             </head>

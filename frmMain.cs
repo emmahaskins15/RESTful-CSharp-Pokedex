@@ -39,10 +39,10 @@ namespace Pokedex
         {
             Pokemon selectedPokemon = new Pokemon();
             await selectedPokemon.LoadData(pokemonID);
-            DisplayStats(selectedPokemon);
+            DisplayStats(currentPokemon);
         }
 
-        public void DisplayStats(Pokemon pokemon)
+        public void DisplayStats(PokemonData pokemon)
         {
             lblNumber.Text = currentPokemon.ID.ToString();
             lblName.Text = ParsePokemonName(currentPokemon.Name);
@@ -51,7 +51,7 @@ namespace Pokedex
             lblType2.Text = (currentPokemon.Weight * .1).ToString() + " kg";
         }
 
-        public static string ParsePokemonName(string name)
+        public string ParsePokemonName(string name)
                 {
                     string parsedName = name.Replace("-", " ");
                     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
@@ -69,7 +69,9 @@ namespace Pokedex
             {
                 currentPokemonID++;
             }
-            LoadSelectedPokemon(currentPokemonID);
+            currentPokemon = Pokemon.LoadPokemon(currentPokemonID);
+            DisplayStats(currentPokemon);
+
         }
 
         private void btnDecrement_Click(object sender, EventArgs e)
@@ -82,12 +84,13 @@ namespace Pokedex
             {  
                 currentPokemonID--;
             }
-            LoadSelectedPokemon(currentPokemonID);
+            currentPokemon = Pokemon.LoadPokemon(currentPokemonID);
+            DisplayStats(currentPokemon);
         }
 
         private void btnStats_Click(object sender, EventArgs e)
         {
-            Form frmStats = new frmStats(this.currentPokemon);
+            Form frmStats = new frmStats(this.currentPokemon, ParsePokemonName(currentPokemon.Name));
             frmStats.ShowDialog();
         }
         private void btnCaught_Click(object sender, EventArgs e)
