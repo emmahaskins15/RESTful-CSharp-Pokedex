@@ -13,6 +13,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.AxHost;
 
 namespace Pokedex
 {
@@ -42,13 +43,8 @@ namespace Pokedex
             lblNumber.Text = pokemon.ID.ToString();
             lblName.Text = ParsePokemonName(pokemon.Name);
             spriteBoxMain.ImageLocation = pokemon.GetSpriteURL();
-            lblType1.Text = pokemon.Height.ToString() + " cm";
-            lblType2.Text = pokemon.Weight.ToString() + " kg";
-            foreach (var stat in pokemon.Stats)
-            {
-                Console.WriteLine($"{stat.Name}: {stat.BaseStat}");
-            }
-            //lblType1.Text = pokemon.Types[0];
+            lblType1.Text = (pokemon.Height * 10).ToString() + " cm";
+            lblType2.Text = (pokemon.Weight * .1).ToString() + " kg";
         }
 
         public static string ParsePokemonName(string name)
@@ -66,8 +62,8 @@ namespace Pokedex
             public int ID { get; set; }
             public int Height { get; set; }
             public int Weight { get; set; }
-            public List<PokemonType> Types { get; set; }
-            public List<PokemonStat> Stats { get; set; }
+            public List<TypeItem> Types { get; set; }
+            public List<StatsItem> Stats { get; set; }
             public string GetSpriteURL()
             {
                 string spriteURL = $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{ID}.png";
@@ -95,8 +91,14 @@ namespace Pokedex
                         ID = pokemonData.ID;
                         Height = pokemonData.Height;
                         Weight = pokemonData.Weight;
-                        Types = pokemonData.Types;
-                        Stats = pokemonData.Stats;
+                        Types = pokemonData.types;
+                        Stats = pokemonData.stats;
+
+                        // Format for returning type name eg "grass" and stat BaseStat eg "45"
+                        // stats[0] = "hp". stats[1] = "attack", 2 = Def, 3 = Sp.Atk, 4 = Sp.Def, 5 = Speed
+                        var typesTest = pokemonData.types[0].type.name.ToString();
+                        var statsTest = pokemonData.stats[0].BaseStat.ToString() + " hp";
+
                     }
                     else
                     {
@@ -113,19 +115,29 @@ namespace Pokedex
             public int ID { get; set; }
             public int Height { get; set; }
             public int Weight { get; set; }
-            public List<PokemonType> Types { get; set; }
-            public List<PokemonStat> Stats { get; set; }
+            public List<TypeItem> types { get; set; }
+            public List<StatsItem> stats { get; set; }
         }
 
-        public class PokemonType
+        public class TypeItem
         {
-            public string Name { get; set; }
+            public Type type { get; set; }
         }
 
-        public class PokemonStat
+        public class Type
         {
-            public string Name { get; set; }
+            public string name { get; set; }
+        }
+
+        public class Stat
+        {
+            public string name { get; set; }
+        }
+        public class StatsItem
+        {
+            [JsonPropertyName("base_stat")]
             public int BaseStat { get; set; }
+            public Stat stat { get; set; }
         }
 
 
@@ -148,7 +160,7 @@ namespace Pokedex
         {
             if (currentPokemonID == 1)
             {
-                currentPokemonID = 10271;
+                currentPokemonID = 10263;
             }
             else
             {  
@@ -166,3 +178,16 @@ namespace Pokedex
         }
     }
 }
+
+
+
+// Captains log
+//Types still don't work
+//    Should probably just use the CSV
+//    omg you deleted it wtf bro
+//    like actually wtf
+//    okay
+//    this is fine
+//    I need to deserialize stats and GUI them up into a bar graph or w/e
+//    And I also need to implement an HTML thing, maybe a bar graph? or a cry played in a webframe?
+
