@@ -72,7 +72,11 @@ namespace Pokedex
                     parsedName = textInfo.ToTitleCase(parsedName);
                     return parsedName;
                 }
-
+        /// <summary>
+        /// Incrememnts currentPokemonID and calls LoadSelectedPokemon
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnIncrement_Click(object sender, EventArgs e)
         {
             if (this.currentPokemonID == 10263)
@@ -86,7 +90,11 @@ namespace Pokedex
             LoadSelectedPokemon(this.currentPokemonID);
 
         }
-
+        /// <summary>
+        /// Decrements currentPokemonID and calls LoadSelectedPokemon
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDecrement_Click(object sender, EventArgs e)
         {
             if (this.currentPokemonID == 1)
@@ -99,19 +107,32 @@ namespace Pokedex
             }
             LoadSelectedPokemon(this.currentPokemonID);
         }
-
+        /// <summary>
+        /// Instantiates frmStats, passing PokemonData currentPokemon and the parsed string currentPokemon.Nam
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStats_Click(object sender, EventArgs e)
         {
             Form frmStats = new frmStats(this.currentPokemon, ParsePokemonName(this.currentPokemon.Name));
             frmStats.ShowDialog();
         }
+        /// <summary>
+        /// Instantiates frmCaught, passing List of PokemonData caughtPokemonList
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCaught_Click(object sender, EventArgs e)
         {
             frmCaught frmCaught = new frmCaught(this.caughtPokemonList);
             frmCaught.Show();
         }
 
-
+        /// <summary>
+        /// Adds currentPokemon to caughtPokemonList
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddToCaught_Click(object sender, EventArgs e)
         {
             this.caughtPokemonList.Add(this.currentPokemon);

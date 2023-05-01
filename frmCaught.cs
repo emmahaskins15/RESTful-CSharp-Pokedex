@@ -16,7 +16,7 @@ namespace Pokedex
         public List<PokemonData> caughtPokemonList { get; set; }
         public string caughtPokemonName { get; set; }
         public string caughtPokemonSprite { get; set; }
-        //public frmCaught(string caughtPokemonName, string caughtPokemonSprite, List<string> caughtPokemonList)
+
         /// <summary>
         /// Takes  List of PokemonData and assigns values to frmCaught.caughtPokemonList
         /// </summary>
@@ -37,7 +37,6 @@ namespace Pokedex
                 foreach (PokemonData pokemon in caughtPokemonList)
                 {
                     lstCaughtPokemon.Items.Add(pokemon.Name);
-                    //imageListSprites.Images.Add(@"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + pokemon.ID + ".png");
                 }
 
             }

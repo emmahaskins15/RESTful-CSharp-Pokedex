@@ -87,24 +87,51 @@ namespace Pokedex
         /// </summary>
         public List<StatsItem> stats { get; set; }
     }
+
+    /// <summary>
+    /// Represents an item of Type.
+    /// </summary>
     public class TypeItem
     {
+        /// <summary>
+        /// Gets or sets the type.
+        /// </summary>
         public Type type { get; set; }
     }
-
+    /// <summary>
+    /// Represents the Type object
+    /// </summary>
     public class Type
     {
+        /// <summary>
+        /// Gets or sets name of Type
+        /// </summary>
         public string name { get; set; }
     }
 
+    /// <summary>
+    /// Represents Stat object
+    /// </summary>
     public class Stat
     {
+        /// <summary>
+        /// Gets or sets name of Stat
+        /// </summary>
         public string name { get; set; }
     }
+    /// <summary>
+    /// Represents item of Stats
+    /// </summary>
     public class StatsItem
     {
+        /// <summary>
+        /// Gets or sets StatsItem BaseStat
+        /// </summary>
         [JsonPropertyName("base_stat")]
         public int BaseStat { get; set; }
+        /// <summary>
+        /// Gets or sets StatsItem stat
+        /// </summary>
         public Stat stat { get; set; }
     }
 
