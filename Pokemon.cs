@@ -51,39 +51,6 @@ namespace Pokedex
                 }
             }
         }
-        /// <summary>
-        /// Takes int pokemonID
-        /// 
-        /// </summary>
-        /// <param name="pokemonID"></param>
-        /// <returns></returns>
-        /// <exception cref="HttpRequestException"></exception>
-        //public async Task<PokemonData> LoadData(int pokemonID)
-        //{
-        //    using (HttpClient httpClient = new HttpClient())
-        //    {
-        //        string url = $"https://pokeapi.co/api/v2/pokemon/{pokemonID}/";
-        //        HttpResponseMessage response = await httpClient.GetAsync(url);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var options = new JsonSerializerOptions
-        //            {
-        //                PropertyNameCaseInsensitive = true
-        //            };
-
-        //            string json = await response.Content.ReadAsStringAsync();
-
-        //            PokemonData pokemonData = JsonSerializer.Deserialize<PokemonData>(json, options);
-        //            return pokemonData;
-        //        }
-        //        else
-        //        {
-        //            throw new HttpRequestException($"HTTP error: {response.StatusCode}");
-        //        }
-        //    }
-        //}
-
     }
     /// <summary>
     /// Represents data for a Pokemon.
@@ -120,16 +87,6 @@ namespace Pokedex
         /// </summary>
         public List<StatsItem> stats { get; set; }
     }
-    //public class PokemonStats
-    //{
-    //    public int HP { get; set; }
-    //    public int Attack { get; set; }
-    //    public int Defense { get; set; }
-    //    public int SpecialAttack { get; set; }
-    //    public int SpecialDefense { get; set; }
-    //    public int Speed { get; set; }
-    //}
-
     public class TypeItem
     {
         public Type type { get; set; }

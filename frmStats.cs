@@ -27,35 +27,13 @@ namespace Pokedex
 
         private async void frmStats_Load(object sender, EventArgs e)
         {
-
-            //string curDir = Directory.GetCurrentDirectory();
-            //webBrowserStats.Navigate(new Uri(String.Format('file:///{0}/stats.html', curDir)));
-            //WebView2 statsWebView = new WebView2();
             statsWebView.CoreWebView2InitializationCompleted += statsWebView_CoreWebView2InitializationCompleted;
             await statsWebView.EnsureCoreWebView2Async(null);
-
-
         }
-
-       //PokemonStats LoadPokemonStats(PokemonData pokemonData)
-       // {
-       //     PokemonStats stats = new PokemonStats
-       //     {
-       //         HP = pokemonData.stats[0].BaseStat,
-       //         Attack = pokemonData.stats[1].BaseStat,
-       //         Defense = pokemonData.stats[2].BaseStat,
-       //         SpecialAttack = pokemonData.stats[3].BaseStat,
-       //         SpecialDefense = pokemonData.stats[4].BaseStat,
-       //         Speed = pokemonData.stats[5].BaseStat
-       //     };
-       //     return stats;
-       // }
-
         private void statsWebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
 
             string htmlTest = CurrentPokemon.Name;
-            //double maxStatValue = Math.Max(CurrentPokemon.stats[0], Math.Max(CurrentPokemon.stats[1], Math.Max(CurrentPokemon.stats[2], Math.Max(CurrentPokemon.stats[3], Math.Max(CurrentPokemon.stats[4], CurrentPokemon.stats[5])))));
             double hpAsPercent = (double)CurrentPokemon.stats[0].BaseStat / 255 * 100;
             double atkAsPercent = (double)CurrentPokemon.stats[1].BaseStat / 255 * 100;
             double defAsPercent = (double)CurrentPokemon.stats[2].BaseStat / 255 * 100;
@@ -160,9 +138,7 @@ namespace Pokedex
 
 
             // Render HTML
-            //webBrowserStats.Document.Write(html);
             statsWebView.NavigateToString(html);
-            //webBrowserStats.Document.Write(htmlTest);
         }
     }
 }

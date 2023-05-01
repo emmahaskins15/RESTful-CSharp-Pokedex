@@ -116,25 +116,5 @@ namespace Pokedex
         {
             this.caughtPokemonList.Add(this.currentPokemon);
         }
-
-        //public bool IsPokemonOnCaughtList(List<int> CaughtList)
-        //{
-        //    foreach (int pokemonID in CaughtList)
-        //    {
-        //        if (pokemonID == currentPokemonID)
-        //        {
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //}
     }
 }
-
-// Format for returning type name eg "grass" and stat BaseStat eg "45"
-// stats[0] = "hp". stats[1] = "attack", 2 = Def, 3 = Sp.Atk, 4 = Sp.Def, 5 = Speed
-//var typesTest = pokemonData.types[0].type.name.ToString();
-//var statsTest = pokemonData.stats[0].BaseStat.ToString() + " hp";
