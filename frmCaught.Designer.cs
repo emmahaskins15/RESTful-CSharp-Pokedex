@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Bulbasaur", 0);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Bulbasaur", 0);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCaught));
             this.lstCaughtPokemon = new System.Windows.Forms.ListView();
             this.imageListSprites = new System.Windows.Forms.ImageList(this.components);
@@ -39,7 +39,7 @@
             // 
             this.lstCaughtPokemon.HideSelection = false;
             this.lstCaughtPokemon.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
             this.lstCaughtPokemon.LargeImageList = this.imageListSprites;
             this.lstCaughtPokemon.Location = new System.Drawing.Point(12, 12);
             this.lstCaughtPokemon.Name = "lstCaughtPokemon";
@@ -61,6 +61,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(230, 269);
             this.Controls.Add(this.lstCaughtPokemon);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmCaught";
             this.Text = "Caught Pokemon";
             this.Load += new System.EventHandler(this.frmCaught_Load);

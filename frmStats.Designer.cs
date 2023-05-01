@@ -51,7 +51,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 928);
             this.Controls.Add(this.statsWebView);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmStats";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Stats";
             this.Load += new System.EventHandler(this.frmStats_Load);
             ((System.ComponentModel.ISupportInitialize)(this.statsWebView)).EndInit();

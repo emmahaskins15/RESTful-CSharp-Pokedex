@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.lblNumber = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,8 +41,6 @@
             this.btnCaught = new System.Windows.Forms.Button();
             this.btnIncrement = new System.Windows.Forms.Button();
             this.btnDecrement = new System.Windows.Forms.Button();
-            this.caughtCheckbox = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnAddToCaught = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spriteBoxMain)).BeginInit();
@@ -62,6 +61,15 @@
             this.groupBox1.Size = new System.Drawing.Size(338, 262);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(254, 87);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 20);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Weight:";
             // 
             // lblName
             // 
@@ -145,9 +153,9 @@
             // btnIncrement
             // 
             this.btnIncrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIncrement.Location = new System.Drawing.Point(493, 59);
+            this.btnIncrement.Location = new System.Drawing.Point(493, 44);
             this.btnIncrement.Name = "btnIncrement";
-            this.btnIncrement.Size = new System.Drawing.Size(39, 39);
+            this.btnIncrement.Size = new System.Drawing.Size(50, 54);
             this.btnIncrement.TabIndex = 4;
             this.btnIncrement.Text = "⬆";
             this.btnIncrement.UseVisualStyleBackColor = true;
@@ -158,31 +166,11 @@
             this.btnDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDecrement.Location = new System.Drawing.Point(493, 104);
             this.btnDecrement.Name = "btnDecrement";
-            this.btnDecrement.Size = new System.Drawing.Size(39, 39);
+            this.btnDecrement.Size = new System.Drawing.Size(50, 59);
             this.btnDecrement.TabIndex = 5;
             this.btnDecrement.Text = "⬇";
             this.btnDecrement.UseVisualStyleBackColor = true;
             this.btnDecrement.Click += new System.EventHandler(this.btnDecrement_Click);
-            // 
-            // caughtCheckbox
-            // 
-            this.caughtCheckbox.AutoSize = true;
-            this.caughtCheckbox.Location = new System.Drawing.Point(388, 274);
-            this.caughtCheckbox.Name = "caughtCheckbox";
-            this.caughtCheckbox.Size = new System.Drawing.Size(89, 24);
-            this.caughtCheckbox.TabIndex = 6;
-            this.caughtCheckbox.Text = "Caught?";
-            this.caughtCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.caughtCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(254, 87);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 20);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Weight:";
             // 
             // btnAddToCaught
             // 
@@ -200,20 +188,21 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(555, 328);
             this.Controls.Add(this.btnAddToCaught);
-            this.Controls.Add(this.caughtCheckbox);
             this.Controls.Add(this.btnDecrement);
             this.Controls.Add(this.btnIncrement);
             this.Controls.Add(this.btnCaught);
             this.Controls.Add(this.btnStats);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "frmMain";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Pokedex";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spriteBoxMain)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -229,7 +218,6 @@
         private System.Windows.Forms.Button btnCaught;
         private System.Windows.Forms.Button btnIncrement;
         private System.Windows.Forms.Button btnDecrement;
-        private System.Windows.Forms.CheckBox caughtCheckbox;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblNumber;
         private System.Windows.Forms.Label label2;
