@@ -11,21 +11,22 @@ namespace Pokedex
 {
     public class Pokemon
     {
-        //public string Name { get; set; }
-        //public int ID { get; set; }
-        //public int Height { get; set; }
-        //public int Weight { get; set; }
-        //public List<TypeItem> Types { get; set; }
-        //public List<StatsItem> Stats { get; set; }
 
-        //public string GetSpriteURL()
-        //{
-        //    string spriteURL = $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{ID}.png";
-        //    return spriteURL;
-        //}
-
+        private static Dictionary<int, PokemonData> cache = new Dictionary<int, PokemonData>();
+        /// <summary>
+        /// Takes int pokemonID
+        /// Instantiates HttpClient and makes a GET request to PokeAPI, returns JSON string
+        /// If success: deserializes JSON string into PokemonData instance pokemonData, returns pokemonData
+        /// </summary>
+        /// <param name="pokemonID"></param>
+        /// <returns></returns>
+        /// <exception cref="HttpRequestException"></exception>
         public static PokemonData LoadPokemon(int pokemonID)
         {
+            if (Pokemon.cache.ContainsKey(pokemonID))
+            {
+                return Pokemon.cache[pokemonID];
+            }
             using (HttpClient httpClient = new HttpClient())
             {
                 string url = $"https://pokeapi.co/api/v2/pokemon/{pokemonID}/";
@@ -41,6 +42,7 @@ namespace Pokedex
                     string json = response.Content.ReadAsStringAsync().Result;
 
                     PokemonData pokemonData = JsonSerializer.Deserialize<PokemonData>(json, options);
+                    Pokemon.cache[pokemonID] = pokemonData;
                     return pokemonData;
                 }
                 else
@@ -49,59 +51,84 @@ namespace Pokedex
                 }
             }
         }
+        /// <summary>
+        /// Takes int pokemonID
+        /// 
+        /// </summary>
+        /// <param name="pokemonID"></param>
+        /// <returns></returns>
+        /// <exception cref="HttpRequestException"></exception>
+        //public async Task<PokemonData> LoadData(int pokemonID)
+        //{
+        //    using (HttpClient httpClient = new HttpClient())
+        //    {
+        //        string url = $"https://pokeapi.co/api/v2/pokemon/{pokemonID}/";
+        //        HttpResponseMessage response = await httpClient.GetAsync(url);
 
-        public async Task<PokemonData> LoadData(int pokemonID)
-        {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                string url = $"https://pokeapi.co/api/v2/pokemon/{pokemonID}/";
-                HttpResponseMessage response = await httpClient.GetAsync(url);
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var options = new JsonSerializerOptions
+        //            {
+        //                PropertyNameCaseInsensitive = true
+        //            };
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
+        //            string json = await response.Content.ReadAsStringAsync();
 
-                    string json = await response.Content.ReadAsStringAsync();
-
-                    PokemonData pokemonData = JsonSerializer.Deserialize<PokemonData>(json, options);
-                    //this.Name = pokemonData.Name;
-                    //ID = pokemonData.ID;
-                    //Height = pokemonData.Height;
-                    //Weight = pokemonData.Weight;
-                    //Types = pokemonData.types;
-                    //Stats = pokemonData.stats;
-
-                    return pokemonData;
-                }
-                else
-                {
-                    throw new HttpRequestException($"HTTP error: {response.StatusCode}");
-                }
-            }
-        }
+        //            PokemonData pokemonData = JsonSerializer.Deserialize<PokemonData>(json, options);
+        //            return pokemonData;
+        //        }
+        //        else
+        //        {
+        //            throw new HttpRequestException($"HTTP error: {response.StatusCode}");
+        //        }
+        //    }
+        //}
 
     }
+    /// <summary>
+    /// Represents data for a Pokemon.
+    /// </summary>
     public class PokemonData
     {
+        /// <summary>
+        /// Gets or sets the name of the Pokemon.
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the Pokemon.
+        /// </summary>
         public int ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the height of the Pokemon.
+        /// </summary>
         public int Height { get; set; }
+
+        /// <summary>
+        /// Gets or sets the weight of the Pokemon.
+        /// </summary>
         public int Weight { get; set; }
+
+        /// <summary>
+        /// Gets or sets the types of the Pokemon.
+        /// </summary>
         public List<TypeItem> types { get; set; }
+
+        /// <summary>
+        /// Gets or sets the stats of the Pokemon.
+        /// </summary>
         public List<StatsItem> stats { get; set; }
     }
-    public class PokemonStats
-    {
-        public int HP { get; set; }
-        public int Attack { get; set; }
-        public int Defense { get; set; }
-        public int SpecialAttack { get; set; }
-        public int SpecialDefense { get; set; }
-        public int Speed { get; set; }
-    }
+    //public class PokemonStats
+    //{
+    //    public int HP { get; set; }
+    //    public int Attack { get; set; }
+    //    public int Defense { get; set; }
+    //    public int SpecialAttack { get; set; }
+    //    public int SpecialDefense { get; set; }
+    //    public int Speed { get; set; }
+    //}
 
     public class TypeItem
     {

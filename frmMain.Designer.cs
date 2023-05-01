@@ -42,6 +42,7 @@
             this.btnDecrement = new System.Windows.Forms.Button();
             this.caughtCheckbox = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnAddToCaught = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spriteBoxMain)).BeginInit();
             this.SuspendLayout();
@@ -133,7 +134,7 @@
             // 
             // btnCaught
             // 
-            this.btnCaught.Location = new System.Drawing.Point(387, 135);
+            this.btnCaught.Location = new System.Drawing.Point(387, 199);
             this.btnCaught.Name = "btnCaught";
             this.btnCaught.Size = new System.Drawing.Size(90, 60);
             this.btnCaught.TabIndex = 2;
@@ -183,11 +184,22 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "Weight:";
             // 
+            // btnAddToCaught
+            // 
+            this.btnAddToCaught.Location = new System.Drawing.Point(388, 133);
+            this.btnAddToCaught.Name = "btnAddToCaught";
+            this.btnAddToCaught.Size = new System.Drawing.Size(90, 60);
+            this.btnAddToCaught.TabIndex = 7;
+            this.btnAddToCaught.Text = "Add to Caught";
+            this.btnAddToCaught.UseVisualStyleBackColor = true;
+            this.btnAddToCaught.Click += new System.EventHandler(this.btnAddToCaught_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(555, 328);
+            this.Controls.Add(this.btnAddToCaught);
             this.Controls.Add(this.caughtCheckbox);
             this.Controls.Add(this.btnDecrement);
             this.Controls.Add(this.btnIncrement);
@@ -221,6 +233,7 @@
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblNumber;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnAddToCaught;
     }
 }
 

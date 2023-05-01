@@ -32,7 +32,7 @@
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Bulbasaur", 0);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCaught));
             this.lstCaughtPokemon = new System.Windows.Forms.ListView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.imageListSprites = new System.Windows.Forms.ImageList(this.components);
             this.SuspendLayout();
             // 
             // lstCaughtPokemon
@@ -40,20 +40,20 @@
             this.lstCaughtPokemon.HideSelection = false;
             this.lstCaughtPokemon.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
-            this.lstCaughtPokemon.LargeImageList = this.imageList1;
+            this.lstCaughtPokemon.LargeImageList = this.imageListSprites;
             this.lstCaughtPokemon.Location = new System.Drawing.Point(12, 12);
             this.lstCaughtPokemon.Name = "lstCaughtPokemon";
             this.lstCaughtPokemon.Size = new System.Drawing.Size(206, 245);
-            this.lstCaughtPokemon.SmallImageList = this.imageList1;
+            this.lstCaughtPokemon.SmallImageList = this.imageListSprites;
             this.lstCaughtPokemon.TabIndex = 0;
             this.lstCaughtPokemon.UseCompatibleStateImageBehavior = false;
             this.lstCaughtPokemon.View = System.Windows.Forms.View.SmallIcon;
             // 
-            // imageList1
+            // imageListSprites
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "1.gif");
+            this.imageListSprites.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListSprites.ImageStream")));
+            this.imageListSprites.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListSprites.Images.SetKeyName(0, "1.gif");
             // 
             // frmCaught
             // 
@@ -63,6 +63,7 @@
             this.Controls.Add(this.lstCaughtPokemon);
             this.Name = "frmCaught";
             this.Text = "Caught Pokemon";
+            this.Load += new System.EventHandler(this.frmCaught_Load);
             this.ResumeLayout(false);
 
         }
@@ -70,6 +71,6 @@
         #endregion
 
         private System.Windows.Forms.ListView lstCaughtPokemon;
-        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ImageList imageListSprites;
     }
 }

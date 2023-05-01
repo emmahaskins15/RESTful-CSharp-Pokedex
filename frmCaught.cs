@@ -7,14 +7,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Pokedex;
 
 namespace Pokedex
 {
     public partial class frmCaught : Form
     {
-        public frmCaught()
+        public List<PokemonData> caughtPokemonList { get; set; }
+        public string caughtPokemonName { get; set; }
+        public string caughtPokemonSprite { get; set; }
+        //public frmCaught(string caughtPokemonName, string caughtPokemonSprite, List<string> caughtPokemonList)
+        /// <summary>
+        /// Takes  List of PokemonData and assigns values to frmCaught.caughtPokemonList
+        /// </summary>
+        /// <param name="caughtPokemonList"></param>
+        public frmCaught(List<PokemonData> caughtPokemonList)
         {
             InitializeComponent();
+            this.caughtPokemonName = caughtPokemonName;
+            this.caughtPokemonSprite = caughtPokemonSprite;
+            this.caughtPokemonList = caughtPokemonList;
+        }
+
+        private void frmCaught_Load(object sender, EventArgs e)
+        {
+            lstCaughtPokemon.Items.Clear();
+            if (caughtPokemonList != null)
+            {
+                foreach (PokemonData pokemon in caughtPokemonList)
+                {
+                    lstCaughtPokemon.Items.Add(pokemon.Name);
+                    //imageListSprites.Images.Add(@"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + pokemon.ID + ".png");
+                }
+
+            }
+
         }
     }
 }

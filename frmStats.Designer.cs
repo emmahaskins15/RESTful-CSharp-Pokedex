@@ -28,34 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.webBrowserStats = new System.Windows.Forms.WebBrowser();
+            this.statsWebView = new Microsoft.Web.WebView2.WinForms.WebView2();
+            ((System.ComponentModel.ISupportInitialize)(this.statsWebView)).BeginInit();
             this.SuspendLayout();
             // 
-            // webBrowserStats
+            // statsWebView
             // 
-            this.webBrowserStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowserStats.Location = new System.Drawing.Point(0, 0);
-            this.webBrowserStats.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowserStats.Name = "webBrowserStats";
-            this.webBrowserStats.Size = new System.Drawing.Size(1167, 773);
-            this.webBrowserStats.TabIndex = 0;
-            this.webBrowserStats.Url = new System.Uri("", System.UriKind.Relative);
+            this.statsWebView.AllowExternalDrop = true;
+            this.statsWebView.CreationProperties = null;
+            this.statsWebView.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.statsWebView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statsWebView.Location = new System.Drawing.Point(0, 0);
+            this.statsWebView.Name = "statsWebView";
+            this.statsWebView.Size = new System.Drawing.Size(624, 928);
+            this.statsWebView.TabIndex = 1;
+            this.statsWebView.ZoomFactor = 1D;
+            this.statsWebView.CoreWebView2InitializationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs>(this.statsWebView_CoreWebView2InitializationCompleted);
             // 
             // frmStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1167, 773);
-            this.Controls.Add(this.webBrowserStats);
+            this.ClientSize = new System.Drawing.Size(624, 928);
+            this.Controls.Add(this.statsWebView);
             this.Name = "frmStats";
             this.Text = "Stats";
             this.Load += new System.EventHandler(this.frmStats_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.statsWebView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.WebBrowser webBrowserStats;
+        private Microsoft.Web.WebView2.WinForms.WebView2 statsWebView;
     }
 }

@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -24,33 +25,46 @@ namespace Pokedex
         public static frmMain instance;
         public int currentPokemonID = 1;
         public PokemonData currentPokemon;
+        public List<PokemonData> caughtPokemonList;
         public frmMain()
         {
             InitializeComponent();
-            this.currentPokemon = Pokemon.LoadPokemon(this.currentPokemonID);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            LoadSelectedPokemon(currentPokemonID);
+            this.caughtPokemonList = new List<PokemonData>();
+            LoadSelectedPokemon(this.currentPokemonID);
         }
-
-        async void LoadSelectedPokemon(int pokemonID)
+        /// <summary>
+        /// Takes int pokemonID and instantiates a new instance of Pokemon.
+        /// Passes pokemonID into to Pokemon.LoadPokemon(int pokemonID).
+        /// Finally, calls DisplayStats, passing PokemonData currentPokemon
+        /// </summary>
+        /// <param name="pokemonID"></param>
+        public void LoadSelectedPokemon(int pokemonID)
         {
-            Pokemon selectedPokemon = new Pokemon();
-            await selectedPokemon.LoadData(pokemonID);
-            DisplayStats(currentPokemon);
+            this.currentPokemon = Pokemon.LoadPokemon(pokemonID);
+            DisplayStats(this.currentPokemon);
         }
-
+        /// <summary>
+        /// Takes PokemonData pokemon and assigns properties from pokemon to controls on frmMain
+        /// </summary>
+        /// <param name="pokemon"></param>
         public void DisplayStats(PokemonData pokemon)
         {
-            lblNumber.Text = currentPokemon.ID.ToString();
-            lblName.Text = ParsePokemonName(currentPokemon.Name);
+            lblNumber.Text = this.currentPokemon.ID.ToString();
+            lblName.Text = ParsePokemonName(this.currentPokemon.Name);
             spriteBoxMain.ImageLocation = $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{currentPokemon.ID}.png";
             lblType1.Text = (currentPokemon.Height * 10).ToString() + " cm";
             lblType2.Text = (currentPokemon.Weight * .1).ToString() + " kg";
         }
-
+        /// <summary>
+        /// Takes string name, removes dashes and replaces them with spaces, assigned to parsedName.
+        /// Finally capitalizes and returns parsedName
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public string ParsePokemonName(string name)
                 {
                     string parsedName = name.Replace("-", " ");
@@ -61,57 +75,64 @@ namespace Pokedex
 
         private void btnIncrement_Click(object sender, EventArgs e)
         {
-            if (currentPokemonID == 10263)
+            if (this.currentPokemonID == 10263)
             {
-                currentPokemonID = 1;
+                this.currentPokemonID = 1;
             }
             else
             {
-                currentPokemonID++;
+                this.currentPokemonID++;
             }
-            currentPokemon = Pokemon.LoadPokemon(currentPokemonID);
-            DisplayStats(currentPokemon);
+            LoadSelectedPokemon(this.currentPokemonID);
 
         }
 
         private void btnDecrement_Click(object sender, EventArgs e)
         {
-            if (currentPokemonID == 1)
+            if (this.currentPokemonID == 1)
             {
                 currentPokemonID = 10263;
             }
             else
-            {  
-                currentPokemonID--;
+            {
+                this.currentPokemonID--;
             }
-            currentPokemon = Pokemon.LoadPokemon(currentPokemonID);
-            DisplayStats(currentPokemon);
+            LoadSelectedPokemon(this.currentPokemonID);
         }
 
         private void btnStats_Click(object sender, EventArgs e)
         {
-            Form frmStats = new frmStats(this.currentPokemon, ParsePokemonName(currentPokemon.Name));
+            Form frmStats = new frmStats(this.currentPokemon, ParsePokemonName(this.currentPokemon.Name));
             frmStats.ShowDialog();
         }
         private void btnCaught_Click(object sender, EventArgs e)
         {
-            frmCaught frmCaught = new frmCaught();
+            frmCaught frmCaught = new frmCaught(this.caughtPokemonList);
             frmCaught.Show();
         }
+
+
+        private void btnAddToCaught_Click(object sender, EventArgs e)
+        {
+            this.caughtPokemonList.Add(this.currentPokemon);
+        }
+
+        //public bool IsPokemonOnCaughtList(List<int> CaughtList)
+        //{
+        //    foreach (int pokemonID in CaughtList)
+        //    {
+        //        if (pokemonID == currentPokemonID)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //}
     }
 }
-
-
-
-// Captains log
-//Types still don't work
-//    Should probably just use the CSV
-//    omg you deleted it wtf bro
-//    like actually wtf
-//    okay
-//    this is fine
-//    I need to deserialize stats and GUI them up into a bar graph or w/e
-//    And I also need to implement an HTML thing, maybe a bar graph? or a cry played in a webframe?
 
 // Format for returning type name eg "grass" and stat BaseStat eg "45"
 // stats[0] = "hp". stats[1] = "attack", 2 = Def, 3 = Sp.Atk, 4 = Sp.Def, 5 = Speed
